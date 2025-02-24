@@ -1,6 +1,7 @@
 package com.bridgelabz.employeepayrollapp.controller;
 
 import com.bridgelabz.employeepayrollapp.model.Employee;
+import com.bridgelabz.employeepayrollapp.repository.EmployeeRepository;
 import com.bridgelabz.employeepayrollapp.service.EmployeeService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ public class EmployeeController {
 
     @Autowired
     private EmployeeService employeeService;
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
     @GetMapping
     public List<Employee> getAllEmployees() {
