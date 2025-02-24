@@ -1,5 +1,6 @@
 package com.bridgelabz.employeepayrollapp.model;
 
+import com.bridgelabz.employeepayrollapp.dto.EmployeePayrollDTO;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
@@ -22,6 +23,10 @@ public class Employee {
     public Employee(String name, double salary) {
         this.name = name;
         this.salary = salary;
+    }
+    public Employee (EmployeePayrollDTO employeePayrollDTO) {
+        this.name = employeePayrollDTO.getName();
+        this.salary = employeePayrollDTO.getSalary();
     }
 
     // Getters & Setters

@@ -1,5 +1,6 @@
 package com.bridgelabz.employeepayrollapp.controller;
 
+import com.bridgelabz.employeepayrollapp.dto.EmployeePayrollDTO;
 import com.bridgelabz.employeepayrollapp.model.Employee;
 import com.bridgelabz.employeepayrollapp.repository.EmployeeRepository;
 import com.bridgelabz.employeepayrollapp.service.EmployeeService;
@@ -41,5 +42,14 @@ public class EmployeeController {
     public ResponseEntity<String> deleteEmployee(@PathVariable Long id) {
         employeeService.deleteEmployee(id);
         return ResponseEntity.ok("Employee deleted successfully");
+    }
+    @PostMapping("/create")
+    public Employee createEmployee(@RequestBody EmployeePayrollDTO employeeDTO) {
+        return new Employee(employeeDTO);
+    }
+
+    @GetMapping("/welcome")
+    public String welcome() {
+        return "Welcome to Employee Payroll App";
     }
 }
