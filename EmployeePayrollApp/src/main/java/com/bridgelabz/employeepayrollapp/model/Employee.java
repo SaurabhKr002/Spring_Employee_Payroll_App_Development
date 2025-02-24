@@ -18,15 +18,26 @@ public class Employee {
     @Min(value = 10000, message = "Salary must be at least 10000")
     private double salary;
 
+    // Default constructor (Required for JPA)
     public Employee() {}
 
+    // Constructor for new Employee creation (Database assigns ID automatically)
     public Employee(String name, double salary) {
         this.name = name;
         this.salary = salary;
     }
-    public Employee (EmployeePayrollDTO employeePayrollDTO) {
+
+    // Constructor for DTO conversion
+    public Employee(EmployeePayrollDTO employeePayrollDTO) {
         this.name = employeePayrollDTO.getName();
         this.salary = employeePayrollDTO.getSalary();
+    }
+
+    // Constructor for testing or non-JPA use cases
+    public Employee(Long id, String name, double salary) {
+        this.id = id;
+        this.name = name;
+        this.salary = salary;
     }
 
     // Getters & Setters

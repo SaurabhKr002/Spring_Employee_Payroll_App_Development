@@ -5,8 +5,11 @@ import com.bridgelabz.employeepayrollapp.model.Employee;
 import com.bridgelabz.employeepayrollapp.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicLong;
 
 @Service
 public class EmployeeService {
@@ -45,4 +48,26 @@ public class EmployeeService {
 
         return employeeRepository.save(employee);
     }
+
+    // In-memory storage for UC5
+    private final List<Employee> employeeList = new ArrayList<>();
+    private final AtomicLong idCounter = new AtomicLong(1); // Unique ID generator
+
+    // New method to create an employee and store in-memory
+    public Employee createEmployeeInMemory(EmployeePayrollDTO employeeDTO) {
+        Employee employee = new Employee(idCounter.getAndIncrement(), employeeDTO.getName(), employeeDTO.getSalary());
+        employeeList.add(employee); // Store in memory
+        return employee;
+    }
+
+    // New method to fetch all employees from in-memory list
+    public List<Employee> getAllEmployeesFromMemory() {
+        return new ArrayList<>(employeeList);
+    }
+
+    // New method to fetch an employee by ID from in-memory list
+    public Optional<Employee> getEmployeeByIdFromMemory(Long id) {
+        return employeeList.stream().filter(emp -> emp.getId().equals(id)).findFirst();
+    }
+
 }

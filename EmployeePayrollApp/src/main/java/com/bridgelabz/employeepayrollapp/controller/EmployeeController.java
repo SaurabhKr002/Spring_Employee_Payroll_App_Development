@@ -60,4 +60,24 @@ public class EmployeeController {
     public ResponseEntity<Employee> updateEmployee(@PathVariable Long id, @RequestBody EmployeePayrollDTO employeeDTO) {
         return ResponseEntity.ok(employeeService.updateEmployee(id, employeeDTO));
     }
+
+    // UC5 - Create Employee in Memory
+    @PostMapping("/employee-memory")
+    public Employee createEmployeeInMemory(@RequestBody EmployeePayrollDTO employeeDTO) {
+        return employeeService.createEmployeeInMemory(employeeDTO);
+    }
+
+    // UC5 - Get All Employees from Memory
+    @GetMapping("/employee-memory")
+    public List<Employee> getAllEmployeesFromMemory() {
+        return employeeService.getAllEmployeesFromMemory();
+    }
+
+    // UC5 - Get Employee by ID from Memory
+    @GetMapping("/employee-memory/{id}")
+    public ResponseEntity<Employee> getEmployeeByIdFromMemory(@PathVariable Long id) {
+        return employeeService.getEmployeeByIdFromMemory(id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
 }
