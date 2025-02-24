@@ -1,5 +1,6 @@
 package com.bridgelabz.employeepayrollapp.service;
 
+import com.bridgelabz.employeepayrollapp.dto.EmployeePayrollDTO;
 import com.bridgelabz.employeepayrollapp.model.Employee;
 import com.bridgelabz.employeepayrollapp.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,5 +28,21 @@ public class EmployeeService {
 
     public void deleteEmployee(Long id) {
         employeeRepository.deleteById(id);
+    }
+    public Employee createEmployee(EmployeePayrollDTO employeeDTO) {
+        Employee employee = new Employee();
+        employee.setName(employeeDTO.getName());
+        employee.setSalary(employeeDTO.getSalary());
+        return employeeRepository.save(employee);
+    }
+
+    public Employee updateEmployee(Long id, EmployeePayrollDTO employeeDTO) {
+        Employee employee = employeeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Employee not found with ID: " + id));
+
+        employee.setName(employeeDTO.getName());
+        employee.setSalary(employeeDTO.getSalary());
+
+        return employeeRepository.save(employee);
     }
 }

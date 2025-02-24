@@ -52,4 +52,12 @@ public class EmployeeController {
     public String welcome() {
         return "Welcome to Employee Payroll App";
     }
+    @PostMapping("/createNew")
+    public Employee createNewEmployee(@RequestBody EmployeePayrollDTO employeeDTO) {
+        return employeeService.createEmployee(employeeDTO);
+    }
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Employee> updateEmployee(@PathVariable Long id, @RequestBody EmployeePayrollDTO employeeDTO) {
+        return ResponseEntity.ok(employeeService.updateEmployee(id, employeeDTO));
+    }
 }
