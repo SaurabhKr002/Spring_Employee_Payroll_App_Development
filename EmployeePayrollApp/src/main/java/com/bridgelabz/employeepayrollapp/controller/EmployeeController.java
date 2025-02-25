@@ -1,6 +1,7 @@
 package com.bridgelabz.employeepayrollapp.controller;
 
 import com.bridgelabz.employeepayrollapp.dto.EmployeePayrollDTO;
+import com.bridgelabz.employeepayrollapp.exception.EmployeeNotFoundException;
 import com.bridgelabz.employeepayrollapp.model.Employee;
 import com.bridgelabz.employeepayrollapp.repository.EmployeeRepository;
 import com.bridgelabz.employeepayrollapp.service.EmployeeService;
@@ -21,8 +22,8 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
-    /* @Autowired
-    private EmployeeRepository employeeRepository; */ // Commented to avoid conflict; not required in the controller
+     @Autowired
+    private EmployeeRepository employeeRepository;
 
     @GetMapping
     public List<Employee> getAllEmployees() {
@@ -100,5 +101,29 @@ public class EmployeeController {
         return employeeService.getEmployeeByIdFromMemory(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+
+    public Employee getEmployeeByIdex(Long id) {
+        return employeeRepository.findById(id)
+                .orElseThrow(() -> new EmployeeNotFoundException("Employee with ID " + id + " not found!"));
+    }
+
+    public Employee addEmployeeex(Employee employee) {
+        return employeeRepository.save(employee);
+    }
+
+    public Employee updateEmployeeex(Long id, EmployeePayrollDTO employeeDTO) {
+        Employee existingEmployee = employeeRepository.findById(id)
+                .orElseThrow(() -> new EmployeeNotFoundException("Employee with ID " + id + " not found!"));
+        existingEmployee.setName(employeeDTO.getName());
+        existingEmployee.setSalary(employeeDTO.getSalary());
+        return employeeRepository.save(existingEmployee);
+    }
+
+    public void deleteEmployeeex(Long id) {
+        Employee employee = employeeRepository.findById(id)
+                .orElseThrow(() -> new EmployeeNotFoundException("Employee with ID " + id + " not found!"));
+        employeeRepository.delete(employee);
     }
 }
