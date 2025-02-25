@@ -63,14 +63,14 @@ public class EmployeeController {
     } */ // Commented to avoid conflict with new method
 
     @PostMapping("/createNew")
-    public Employee createNewEmployee(@RequestBody EmployeePayrollDTO employeeDTO) {
+    public Employee createNewEmployee(@Valid @RequestBody EmployeePayrollDTO employeeDTO) {
         // UC7 - Logging added
         log.info("Creating new employee from DTO: {}", employeeDTO);
         return employeeService.createEmployee(employeeDTO);
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Employee> updateEmployee(@PathVariable Long id, @RequestBody EmployeePayrollDTO employeeDTO) {
+    public ResponseEntity<Employee> updateEmployee(@PathVariable Long id, @Valid @RequestBody EmployeePayrollDTO employeeDTO) {
         // UC7 - Logging added
         log.info("Updating employee with ID: {}", id);
         return ResponseEntity.ok(employeeService.updateEmployee(id, employeeDTO));
