@@ -43,11 +43,11 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public Employee addEmployee(@Valid @RequestBody Employee employee) {
-        // UC7 - Logging added
-        log.info("Adding new employee: {}", employee);
-        return employeeService.addEmployee(employee);
+    public Employee addEmployee(@Valid @RequestBody EmployeePayrollDTO employeeDTO) {
+        log.info("Adding new employee: {}", employeeDTO);
+        return employeeService.createEmployee(employeeDTO);
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteEmployee(@PathVariable Long id) {

@@ -50,7 +50,17 @@ public class EmployeeService {
         Employee employee = new Employee();
         employee.setName(employeeDTO.getName());
         employee.setSalary(employeeDTO.getSalary());
+        employee.setGender(employeeDTO.getGender());
+        employee.setNote(employeeDTO.getNote());
 
+        if (employeeDTO.getStartDate() != null) {
+            employee.setStartDate(employeeDTO.getStartDate()); // Ensure correct date handling
+        }
+
+        employee.setDepartment(employeeDTO.getDepartment());
+        employee.setProfilePic(employeeDTO.getProfilePic());
+
+        log.debug("Employee object before saving: {}", employee);
         return employeeRepository.save(employee);
     }
 
@@ -79,7 +89,7 @@ public class EmployeeService {
         // UC7 - Logging added
         log.info("Creating employee in memory: {}", employeeDTO);
 
-        Employee employee = new Employee(idCounter.getAndIncrement(), employeeDTO.getName(), employeeDTO.getSalary());
+        Employee employee = new Employee(idCounter.getAndIncrement(), employeeDTO.getName(), employeeDTO.getSalary(), employeeDTO.getGender(), employeeDTO.getNote(), employeeDTO.getStartDate(), employeeDTO.getDepartment(), employeeDTO.getProfilePic());
         employeeList.add(employee);
         return employee;
     }
