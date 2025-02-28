@@ -37,4 +37,5 @@ public class EmployeePayrollDTO {
 
     @NotEmpty(message = "Department cannot be empty")
     private List<String> department;
+
 }
