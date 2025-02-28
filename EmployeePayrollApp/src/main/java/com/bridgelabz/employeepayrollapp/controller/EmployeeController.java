@@ -55,4 +55,11 @@ public class EmployeeController {
         return ResponseEntity.ok("Employee deleted successfully");
     }
 
+    // UC17 - Get employees by department (Sales, HR, etc.)
+    @GetMapping("/department/{department}")
+    public ResponseEntity<List<Employee>> getEmployeesByDepartment(@PathVariable String department) {
+        log.info("Fetching employees from department: {}", department);
+        List<Employee> employees = employeeService.getEmployeesByDepartment(department);
+        return ResponseEntity.ok(employees);
+    }
 }
